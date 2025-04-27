@@ -1,2 +1,28 @@
 Please add your pseudocode to this file
 And a written explanation of your solution
+/**
+ * Return all consecutive substrings of `s`, in appearance order.
+ *
+ * How it works (in one expression):
+ * 1. `s.split('')` turns the string into an array of characters.
+ * 2. `.flatMap((_, i) => …)` iterates each start-index `i`, producing an array of arrays.
+ * 3. For each `i`, `s.slice(i).split('')` gives the tail starting at `i`.
+ * 4. `.map((_, j) => s.slice(i, i + j + 1))` builds every substring from `i` of length `j+1`.
+ * 5. `flatMap` then flattens those per-`i` arrays into one big result array.
+ *
+ * @param {string} s
+ * @returns {string[]}
+ */
+const allConsecutiveSubstrings = s =>
+  s
+    .split('')
+    .flatMap((_, i) =>
+      s
+        .slice(i)
+        .split('')
+        .map((_, j) => s.slice(i, i + j + 1))
+    );
+
+// Example:
+console.log(allConsecutiveSubstrings("phone"));
+// → ["p","ph","pho","phon","phone","h","ho","hon","hone","o","on","one","n","ne","e"]
